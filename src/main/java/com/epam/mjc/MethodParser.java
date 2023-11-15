@@ -1,5 +1,9 @@
 package com.epam.mjc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class MethodParser {
 
     /**
@@ -20,6 +24,37 @@ public class MethodParser {
      * @return {@link MethodSignature} object filled with parsed values from source string
      */
     public MethodSignature parseFunction(String signatureString) {
-        throw new UnsupportedOperationException("You should implement this method.");
+        String accessModifier = null;
+        String returnType = null;
+        String methodName = null;
+        List<MethodSignature.Argument> listOfArguments = new ArrayList<>();
+
+        String[] modifierReturnTypeMtdName = signatureString.substring(0, signatureString.indexOf("(")).split(" ");
+        List<String> accessModifiers = new ArrayList<>(Arrays.asList("public", "protected", "default", "private"));
+
+        if (accessModifiers.contains(modifierReturnTypeMtdName[0])){
+            accessModifier = modifierReturnTypeMtdName[0];
+            returnType = modifierReturnTypeMtdName[1];
+            methodName = modifierReturnTypeMtdName[2];
+        } else{
+            returnType = modifierReturnTypeMtdName[0];
+            methodName = modifierReturnTypeMtdName[1];
+        }
+
+        String stringArguments = signatureString.substring(signatureString.indexOf("(")+1, signatureString.indexOf(")"));
+        if (!stringArguments.isEmpty()) {
+            for (String TArg: stringArguments.split(", ")) {
+                String[] argumentTypeAndName = TArg.split(" ");
+                MethodSignature.Argument typArg = new MethodSignature.Argument(argumentTypeAndName[0], argumentTypeAndName[1]);
+                listOfArguments.add(typArg);
+            }
+        }
+
+        MethodSignature methodSign = new MethodSignature(methodName, listOfArguments);
+        if(accessModifier != null) methodSign.setAccessModifier(accessModifier);
+        methodSign.setReturnType(returnType);
+
+        return methodSign;
+//        throw new UnsupportedOperationException("You should implement this method.");
     }
 }
