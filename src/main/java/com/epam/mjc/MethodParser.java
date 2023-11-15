@@ -55,6 +55,5 @@ public class MethodParser {
         methodSign.setReturnType(returnType);
 
         return methodSign;
-//        throw new UnsupportedOperationException("You should implement this method.");
     }
 }

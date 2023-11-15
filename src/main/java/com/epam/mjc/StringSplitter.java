@@ -21,6 +21,5 @@ public class StringSplitter {
             result.add(st.nextToken());
         }
         return result;
-//        throw new UnsupportedOperationException("You should implement this method.");
     }
 }
